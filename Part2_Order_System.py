@@ -261,3 +261,215 @@ print("==================================")
 
 ================================================================================================
 
+Task 3  Inventory with Deep Copy
+
+inventory = {
+
+    "Paneer Tikka":   {"stock": 10, "reorder_level": 3},
+
+    "Chicken Wings":  {"stock":  8, "reorder_level": 2},
+
+    "Veg Soup":       {"stock": 15, "reorder_level": 5},
+
+    "Butter Chicken": {"stock": 12, "reorder_level": 4},
+
+    "Dal Tadka":      {"stock": 20, "reorder_level": 5},
+
+    "Veg Biryani":    {"stock":  6, "reorder_level": 3},
+
+    "Garlic Naan":    {"stock": 30, "reorder_level": 10},
+
+    "Gulab Jamun":    {"stock":  5, "reorder_level": 2},
+
+    "Rasgulla":       {"stock":  4, "reorder_level": 3},
+
+    "Ice Cream":      {"stock":  7, "reorder_level": 4},
+}
+
+import copy
+inventory_backup = copy.deepcopy(inventory)
+
+====================================================================================================================
+
+Task 4: Sales Log Analysis
+
+# -------------------------------
+
+
+
+# Define sales_log
+
+sales_log = {
+
+    "2025-01-01": [
+
+        {"order_id": 1, "items": ["PANEER Tikka", "Gulab Jamun"], "total": 350.0},
+
+        {"order_id": 2, "items": ["Chicken Wings", "Veg Biryani"], "total": 400.0}
+
+    ],
+
+    "2025-01-02": [
+
+        {"order_id": 3, "items": ["Butter Chicken", "Garlic Naan"], "total": 450.0}
+
+    ],
+
+    "2025-01-03": [
+
+        {"order_id": 4, "items": ["Veg Soup", "Dal Tadka"], "total": 280.0},
+
+        {"order_id": 5, "items": ["PANEER Tikka", "Ice -Cream"], "total": 300.0}
+
+    ],
+
+    "2025-01-04": [
+
+        {"order_id": 6, "items": ["Chicken Wings", "Rasgula"], "total": 320.0},
+
+        {"order_id": 7, "items": ["Veg Biryani", "Gulab Jamun"], "total": 380.0},
+
+        {"order_id": 8, "items": ["Butter Chicken", "Garlic Naan"], "total": 450.0},
+
+        {"order_id": 9, "items": ["Dal Tadka", "Veg Soup"], "total": 280.0},
+
+        {"order_id": 10, "items": ["Ice -Cream", "PANEER Tikka"], "total": 300.0}
+
+    ]
+
+}
+
+
+
+print("\n===== DAILY REVENUE ====")
+
+
+
+daily_revenue = {}
+
+
+
+# Revenue per day:Step1
+
+for date, orders in sales_log.items():
+
+    total = sum(order["total"] for order in orders)
+
+    daily_revenue[date] = total
+
+    print(f"{date} → ₹{total:.2f}")
+
+
+
+# Best-selling day :Step 2
+
+best_day = max(daily_revenue, key=daily_revenue.get)
+
+print(f"\nBest Selling Day: {best_day} (₹{daily_revenue[best_day]:.2f})")
+
+
+
+
+
+# Most ordered item:Step 3
+
+item_count = {}
+
+
+
+for orders in sales_log.values():
+
+    for order in orders:
+
+        for item in order["items"]:
+
+            item_count[item] = item_count.get(item, 0) + 1
+
+
+
+most_ordered = max(item_count, key=item_count.get)
+
+
+
+print(f"\nMost Ordered Item: {most_ordered} ({item_count[most_ordered]} times)")
+
+
+
+
+
+# -------------------------------
+
+# Add New Day:Step4
+
+
+
+sales_log["2025-01-05"] = [
+
+    {"order_id": 11, "items": ["Butter Chicken", "Gulab Jamun", "Garlic Naan"], "total": 490.0},
+
+    {"order_id": 12, "items": ["Paneer Tikka", "Rasgulla"], "total": 260.0}
+
+]
+
+
+
+print("\n===== UPDATED DAILY REVENUE ====")
+
+
+
+# Recalculate
+
+daily_revenue = {}
+
+
+
+for date, orders in sales_log.items():
+
+    total = sum(order["total"] for order in orders)
+
+    daily_revenue[date] = total
+
+    print(f"{date} → ₹{total:.2f}")
+
+
+
+best_day = max(daily_revenue, key=daily_revenue.get)
+
+print(f"\nUpdated Best Selling Day: {best_day} (₹{daily_revenue[best_day]:.2f})")
+
+
+
+
+
+# -------------------------------
+
+# Enumerate All Orders:Step5
+
+
+
+print("\n===== ALL ORDERS ====")
+
+
+
+all_orders = []
+
+
+
+for date, orders in sales_log.items():
+
+    for order in orders:
+
+        all_orders.append((date, order))
+
+
+
+for i, (date, order) in enumerate(all_orders, start=1):
+
+    items = ", ".join(order["items"])
+
+    print(f"{i}. [{date}] Order #{order['order_id']} — ₹{order['total']:.2f} — Items: {items}")
+
+===============================================================================================================================================================
+
+
+
